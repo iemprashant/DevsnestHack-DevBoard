@@ -100,7 +100,7 @@ h4 {
 
 #toolbox {
     padding-top: .5rem;
-    height: 72vh;
+    height: 45rem;
     width: 7rem;
     transition: 0.5s;
     border-radius: 10px;
@@ -110,7 +110,7 @@ h4 {
     border: var(--default-primary-color) 1px solid;
     display: flex;
     flex-direction: column;
-    position: fixed
+    position: absolute;
 }
 
 .tooltip {

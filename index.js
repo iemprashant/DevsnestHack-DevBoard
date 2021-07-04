@@ -21,7 +21,7 @@ function init() {
 
 function setCanvasSize() {
     var originalsize = canvascontext.getImageData(0, 0, canv.width, canv.height)
-    canv.width = window.innerWidth - 20
+    canv.width = window.innerWidth - 40
     canv.height = window.innerHeight - 90
     canvascontext.putImageData(originalsize, 0, 0, 0, 0, canv.width, canv.height)
 }
@@ -141,5 +141,14 @@ function clearPage() {
     canvascontext.clearRect(0, 0, canv.width, canv.height)
     canvascontext.fillStyle = document.getElementById('boardcolor').value
     canvascontext.fillRect(0, 0, canv.width, canv.height)
+}
+
+function savecanvas() {
+    alert("hello")
+    var image = canv.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
+    var link = document.createElement('a');
+    link.download = "devnestWhiteboard.png";
+    link.href = image;
+    link.click();
 }
 document.onload = init()
