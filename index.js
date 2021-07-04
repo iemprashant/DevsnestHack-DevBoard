@@ -22,7 +22,7 @@ var firstcheck = false;
 function init() {
     if (!firstcheck) {
         buttonStateCheck()
-        firstcheck = true;
+
     }
     setCanvasSize()
     setBoardColour(defaultcolour)
@@ -30,6 +30,7 @@ function init() {
     canv.style.cursor = 'url("./assets/pencursor.png"), auto'
     toolbox.style.cursor = 'pointer'
     startPencil()
+    firstcheck = true;
 }
 
 function setCanvasSize() {
@@ -60,33 +61,37 @@ function canvasEventSetup() {
     canv.addEventListener('mousedown', start_draw)
     canv.addEventListener('mouseup', stop_draw)
     canv.addEventListener('mouseout', stop_draw)
-    canv.addEventListener('mouseup', auxillaryStopDraw())
+    canv.addEventListener('mouseup', updateActionToUndoArray)
     canv.addEventListener('pointerdown', start_draw)
     canv.addEventListener('pointermove', draw)
     canv.addEventListener('pointerup', stop_draw)
-    canv.addEventListener('pointerup', auxillaryStopDraw())
+    canv.addEventListener('pointerup', updateActionToUndoArray)
     canv.addEventListener('pointerout', stop_draw)
 }
 
 //enable and diable undo redo
 function buttonStateCheck() {
-    if (undoArrayIndex < 1) {
+
+    if (undoArrayIndex == 0) {
         undobtn.classList.add("disabled")
-    } else {
-        if (undoArray.length >= 1) {
+        redobtn.classList.add("disabled")
+        clearbtn.classList.add("disabled")
+    }
+    if (undoArray.length >= 1) {
+        clearbtn.classList.remove("disabled")
+        if (undoArrayIndex == undoArray.length - 1) {
+            undobtn.classList.remove("disabled")
+            redobtn.classList.add("disabled")
+        } else {
+            redobtn.classList.remove("disabled")
             undobtn.classList.remove("disabled")
         }
-        if (undoArrayIndex < undoArray.length - 1) {
-            redobtn.classList.remove("disabled")
-        }
     }
-
+    if (undoArray.length > 10) {
+        undoArray.splice(0, (undoArray.length - 10));
+    }
 }
 
-function auxillaryStopDraw() {
-    strok = false
-    updateActionToUndoArray()
-}
 
 function updateActionToUndoArray() {
     strok = false
@@ -94,8 +99,9 @@ function updateActionToUndoArray() {
     if (undoArrayIndex < undoArray.length) {
         undoArray.splice(undoArrayIndex + 1, undoArray.length - undoArrayIndex - 1)
     }
+    console.log(currentState)
     undoArray.push(currentState)
-    undoArrayIndex = undoArray.length - 1
+    undoArrayIndex = undoArray.length - 1;
     if (firstcheck) {
         buttonStateCheck()
     }
