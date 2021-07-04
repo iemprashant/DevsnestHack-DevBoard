@@ -16,13 +16,15 @@
     <div class="container">
         <div id="toolbox">
             <button id="pencil" onclick=""><img id="icon" src="./icons/Pen.svg"></button>
-            <div class="tooltip">
-                <input type="color" id="boardcolor" value="#ffffff" onchange="boardcolourpicker(this)" onkeyup="boardcolourpicker(this)" />
-                <span class="tooltiptext"></span>
-            </div>
+            <input type="color" id="boardcolor" value="#ffffff" onchange="boardcolourpicker(this)" onkeyup="boardcolourpicker(this)" />
+            <input id="strokewidth" value="5" type="range" min="0.5" max="50" placeholder="Example: 1"></input>
+            <div id="properties" style="width:85%">Pen Color<input id="strokecolor" value="#000000" type="color"></div>
+
+
         </div>
-        <canvas id="canvas"></canvas>
-    </div>
+        <div id="pagecontainer">
+            <canvas id="canvas"></canvas>
+        </div>
     </div>
     <script src="./index.js"></script>
 </body>
