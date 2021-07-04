@@ -176,10 +176,10 @@ function savecanvas() {
 // SHifting and working of pen eraser 
 var penstrokewidth = 5;
 var penstrokecolor;
-var eraserstrokewidth = 30;
+var eraserstrokewidth = 100;
 var eraserstrokecolor = document.getElementById("boardcolor").value;
-var lstrokewidth = document.getElementById("strokewidth").value;
-var lstrokecolor = document.getElementById('strokecolor').value;
+var lstrokewidth = currentstrokewidth.value;
+var lstrokecolor = currentstrokecolor.value;
 
 function startEraser() {
     strokecolourbutton.disabled = true;

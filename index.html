@@ -9,14 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Lexend&family=Mate+SC&family=Roboto+Slab&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
-    <title>WhiteBoardApp</title>
+    <title>Devs Board</title>
 </head>
 
 <body>
     <nav class="navbar">
         <span>
             <img class="logo-img " src="./assets/logo.svg " alt=" ">
-            <button class="logo ">White Board</button>
+            <button class="logo ">Devs Board</button>
         </span>
         <span class="top-tollbox">
             <button class="top-btn-icon" id="undobtn" onclick="undo()"><img  src="./assets/undo.svg"></button>
@@ -28,15 +28,14 @@
     </nav>
     <div class="container">
         <div id="toolbox">
-            <button class="icon" id="pencil" onclick="startPencil()"><img  src="./assets/pen.svg"></button>
-            <input class="icon" id="strokewidth" value="5" type="range" min="0.5" max="5 "></input>
-            <input class="color-icon " id="strokecolor" value="#000000" type="color">
-            <button class="icon" id="eraser" onclick="startEraser()"><img  src="./assets/eraser.svg"></button>
-            <button class="icon" id="circle" onclick=" "><img  src="./assets/circle.svg"></button>
-            <button class="icon" id="rectangle" onclick=" "><img  src="./assets/rectangle.svg"></button>
-            <button class="icon" id="line" onclick=" "><img  src="./assets/line.svg"></button>
-            <input class="color-icon " id="boardcolor" type="color" value="#ffffff" onchange="boardcolourpicker(this)" onkeyup="boardcolourpicker(this)" />
-
+            <button class="icon tooltip" id="pencil" onclick="startPencil()"> <span class="tooltiptext">Pen Tool</span><img  src="./assets/pen.svg"></button>
+            <button class="pensize-icon-div tooltip"><span class="tooltiptext">Pen Color</span><input class="color-icon" id="strokecolor" value="#000000" type="color"></input></button>
+            <button class="color-icon-div tooltip"><span class="tooltiptext">Stroke Size</span><input class="pensize-icon tooltip" id="strokewidth" value="10" type="range" min="10" max="100">
+            <button class="icon tooltip" id="eraser" onclick="startEraser()"><span class="tooltiptext">Eraser Tool</span><img  src="./assets/eraser.svg"></button>
+            <button class="icon tooltip" id="circle" onclick=" "><span class="tooltiptext">Circle Tool</span><img  src="./assets/circle.svg"></button>
+            <button class="icon tooltip" id="rectangle" onclick=" "><span class="tooltiptext">Rect Tool</span><img  src="./assets/rectangle.svg"></button>
+            <button class="icon tooltip" id="line" onclick=" "><span class="tooltiptext">Line Tool</span><img  src="./assets/line.svg"></button>
+            <button class="color-icon-div tooltip"><span class="tooltiptext">Draw Circle</span><input class="color-icon" id="boardcolor" type="color" value="#ffffff" onchange="boardcolourpicker(this)" onkeyup="boardcolourpicker(this)" /></button>
         </div>
         <div id="pagecontainer">
             <canvas id="canvas"></canvas>
