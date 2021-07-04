@@ -5,21 +5,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend&family=Mate+SC&family=Roboto+Slab&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <title>WhiteBoardApp</title>
 </head>
 
 <body>
     <nav class="navbar">
+        <span>
+            <img class="logo-img " src="./assets/logo.svg " alt=" ">
+            <button class="logo ">White Board</button>
+        </span>
+        <span class="top-tollbox">
+            <button class="top-btn-icon" id="undobtn" onclick="undo()"><img  src="./assets/undo.svg"></button>
+            <button class="top-btn-icon" id="redobtn" onclick="redo()"><img  src="./assets/redo.svg"></button>
+            <button class="top-btn-icon" id="clearbtn" onclick="clearPage()"><img src="./assets/clear.svg "></button>
+            <button class="top-btn-icon" id="clearbtn" onclick="clearPage()"><img src="./assets/download.svg "></button>
+        </span>
 
     </nav>
     <div class="container">
         <div id="toolbox">
-            <button id="pencil" onclick=""><img id="icon" src="./icons/Pen.svg"></button>
-            <input type="color" id="boardcolor" value="#ffffff" onchange="boardcolourpicker(this)" onkeyup="boardcolourpicker(this)" />
-            <input id="strokewidth" value="5" type="range" min="0.5" max="50" placeholder="Example: 1"></input>
-            <div id="properties" style="width:85%">Pen Color<input id="strokecolor" value="#000000" type="color"></div>
-
+            <button class="icon" id="pencil" onclick=" "><img  src="./assets/pen.svg"></button>
+            <input class="icon" id="strokewidth" value="5" type="range" min="0.5" max="5 "></input>
+            <input class="color-icon " id="strokecolor" value="#000000" type="color">
+            <button class="icon" id="pencil" onclick=" "><img  src="./assets/eraser.svg"></button>
+            <button class="icon" id="pencil" onclick=" "><img  src="./assets/circle.svg"></button>
+            <button class="icon" id="pencil" onclick=" "><img  src="./assets/rectangle.svg"></button>
+            <button class="icon" id="pencil" onclick=" "><img  src="./assets/line.svg"></button>
+            <input class="color-icon " id="boardcolor" type="color" value="#ffffff" onchange="boardcolourpicker(this)" onkeyup="boardcolourpicker(this)" />
 
         </div>
         <div id="pagecontainer">
