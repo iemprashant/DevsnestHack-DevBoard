@@ -22,19 +22,19 @@
             <button class="top-btn-icon" id="undobtn" onclick="undo()"><img  src="./assets/undo.svg"></button>
             <button class="top-btn-icon" id="redobtn" onclick="redo()"><img  src="./assets/redo.svg"></button>
             <button class="top-btn-icon" id="clearbtn" onclick="clearPage()"><img src="./assets/clear.svg "></button>
-            <button class="top-btn-icon" id="clearbtn" onclick="savecanvas()"><img src="./assets/download.svg "></button>
+            <button class="top-btn-icon" id="savebtn" onclick="savecanvas()"><img src="./assets/download.svg "></button>
         </span>
 
     </nav>
     <div class="container">
         <div id="toolbox">
-            <button class="icon" id="pencil" onclick=" "><img  src="./assets/pen.svg"></button>
+            <button class="icon" id="pencil" onclick="startPencil()"><img  src="./assets/pen.svg"></button>
             <input class="icon" id="strokewidth" value="5" type="range" min="0.5" max="5 "></input>
             <input class="color-icon " id="strokecolor" value="#000000" type="color">
-            <button class="icon" id="pencil" onclick=" "><img  src="./assets/eraser.svg"></button>
-            <button class="icon" id="pencil" onclick=" "><img  src="./assets/circle.svg"></button>
-            <button class="icon" id="pencil" onclick=" "><img  src="./assets/rectangle.svg"></button>
-            <button class="icon" id="pencil" onclick=" "><img  src="./assets/line.svg"></button>
+            <button class="icon" id="eraser" onclick="startEraser()"><img  src="./assets/eraser.svg"></button>
+            <button class="icon" id="circle" onclick=" "><img  src="./assets/circle.svg"></button>
+            <button class="icon" id="rectangle" onclick=" "><img  src="./assets/rectangle.svg"></button>
+            <button class="icon" id="line" onclick=" "><img  src="./assets/line.svg"></button>
             <input class="color-icon " id="boardcolor" type="color" value="#ffffff" onchange="boardcolourpicker(this)" onkeyup="boardcolourpicker(this)" />
 
         </div>

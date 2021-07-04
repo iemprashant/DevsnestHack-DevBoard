@@ -182,3 +182,7 @@ h4 {
     margin: .5rem;
     border-radius: 1rem;
 }
+
+.disabled {
+    opacity: .3;
+}

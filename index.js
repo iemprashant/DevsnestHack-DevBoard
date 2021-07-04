@@ -1,22 +1,35 @@
 const canv = document.getElementById('canvas')
 const toolbox = document.getElementById('toolbox')
+const clearbtn = document.getElementById('clearbtn')
+const undobtn = document.getElementById('undobtn')
+const redobtn = document.getElementById('redobtn')
+const strokecolourbutton = document.getElementById("strokecolor")
+const currentstrokewidth = document.getElementById("strokewidth")
+const currentstrokecolor = document.getElementById('strokecolor')
+const eraser = document.getElementById('eraser')
+const pencil = document.getElementById('pencil')
 const canvascontext = canv.getContext('2d')
 const defaultcolour = document.getElementById('boardcolor').value
 var undoArray = []
-var undoArrayIndex
+var undoArrayIndex = 0;
 var full_screen = false
 var loc = { x: 0, y: 0 }
 var controlPoint = { x: 0, y: 0 }
 var strok = false
+var firstcheck = false;
 
 
 function init() {
+    if (!firstcheck) {
+        buttonStateCheck()
+        firstcheck = true;
+    }
     setCanvasSize()
     setBoardColour(defaultcolour)
     canvasEventSetup()
-    canv.style.cursor = 'url("./icons/pencursor.png"), auto'
+    canv.style.cursor = 'url("./assets/pencursor.png"), auto'
     toolbox.style.cursor = 'pointer'
-    buttonStateCheck()
+    startPencil()
 }
 
 function setCanvasSize() {
@@ -47,41 +60,50 @@ function canvasEventSetup() {
     canv.addEventListener('mousedown', start_draw)
     canv.addEventListener('mouseup', stop_draw)
     canv.addEventListener('mouseout', stop_draw)
-    canv.addEventListener('mouseup', updateActionToUndoArray)
+    canv.addEventListener('mouseup', auxillaryStopDraw())
     canv.addEventListener('pointerdown', start_draw)
     canv.addEventListener('pointermove', draw)
     canv.addEventListener('pointerup', stop_draw)
-    canv.addEventListener('pointerup', updateActionToUndoArray)
+    canv.addEventListener('pointerup', auxillaryStopDraw())
     canv.addEventListener('pointerout', stop_draw)
 }
 
 // working of Undo
 function buttonStateCheck() {
-    if (undoArrayIndex == 0) {
-        document.getElementById('undobtn').disabled = true
+    if (undoArrayIndex < 1) {
+        undobtn.classList.add("disabled")
+        redobtn.classList.add("disabled")
+    } else if (undoArray.length >= 1) {
+        undobtn.classList.remove("disabled")
+        redobtn.classList.add("disabled")
+    } else if (undoArrayIndex == undoArray.length - 1) {
+        redobtn.classList.add("disabled")
+    } else if (undoArrayIndex < undoArray.length - 1) {
+        redobtn.classList.remove("disabled")
+        redobtn.disabled = false;
     }
-    if (undoArrayIndex > 0) {
-        document.getElementById('undobtn').disabled = false
-    }
-    // if (undoArrayIndex == undo_arr.length - 1) {
-    //     document.getElementById('action9').disabled = true
-    // }
-    // if (undoArrayIndex < undo_arr.length - 1) {
-    //     document.getElementById('action9').disabled = false
-    // }
     //number of undo's that can be done
     if (undoArray.length > 3) {
         undoArray.splice(0, undoArray.length - 3)
     }
 }
 
+function auxillaryStopDraw() {
+    strok = false
+    updateActionToUndoArray()
+}
+
 function updateActionToUndoArray() {
+    strok = false
     var currentState = canvascontext.getImageData(0, 0, canv.width, canv.height)
     if (undoArrayIndex < undoArray.length) {
         undoArray.splice(undoArrayIndex + 1, undoArray.length - undoArrayIndex - 1)
     }
     undoArray.push(currentState)
     undoArrayIndex = undoArray.length - 1
+    if (firstcheck) {
+        buttonStateCheck()
+    }
 }
 
 function undo() {
@@ -89,7 +111,10 @@ function undo() {
         undoArrayIndex -= 1
         canvascontext.putImageData(undoArray[undoArrayIndex], 0, 0)
     }
-    buttonStateCheck()
+    if (firstcheck) {
+        buttonStateCheck()
+    }
+
 }
 
 function redo() {
@@ -97,7 +122,9 @@ function redo() {
         undoArrayIndex++
         canvascontext.putImageData(undoArray[undoArrayIndex], 0, 0)
     }
-    buttonStateCheck()
+    if (firstcheck) {
+        buttonStateCheck()
+    }
 }
 
 // load stroke details
@@ -150,5 +177,63 @@ function savecanvas() {
     link.download = "devnestWhiteboard.png";
     link.href = image;
     link.click();
+}
+
+// SHifting and working of pen eraser 
+var penstrokewidth = 5;
+var penstrokecolor;
+var eraserstrokewidth = 30;
+var eraserstrokecolor = document.getElementById("boardcolor").value;
+var lstrokewidth = document.getElementById("strokewidth").value;
+var lstrokecolor = document.getElementById('strokecolor').value;
+
+function startEraser() {
+    strokecolourbutton.disabled = true;
+    strokecolourbutton.classList.add("disabled")
+    canv.style.cursor = "url('./assets/eraser.svg'),auto";
+    tool_toggler();
+    isEraserOn = true;
+    currentstrokewidth.value = eraserstrokewidth;
+    currentstrokecolor.value = eraserstrokecolor;
+    eraser.style.backgroundColor = "#9392FF";
+}
+
+function stopEraser() {
+    eraser.style.backgroundColor = "whitesmoke";
+    isEraserOn = false;
+    strokecolourbutton.disabled = false;
+    strokecolourbutton.classList.remove("disabled")
+}
+
+function startPencil() {
+    canv.style.cursor = 'url("./assets/pencursor.png"), auto'
+    tool_toggler()
+    isPencilOn = true
+    currentstrokewidth.value = penstrokewidth
+    currentstrokecolor.value = penstrokecolor
+    pencil.style.backgroundColor = '#9392FF'
+}
+
+function stopPencil() {
+    isPencilOn = false
+    pencil.style.backgroundColor = 'whitesmoke'
+    penstrokewidth = currentstrokewidth.value
+    penstrokecolor = currentstrokecolor.value
+}
+
+var isPencilOn = true,
+    isEraserOn = false,
+    isLineOn = false,
+    isCircleOn = false,
+    isRectOn = false
+
+function tool_toggler() {
+    if (isPencilOn) {
+        stopPencil()
+    }
+    if (isEraserOn) {
+        stopEraser()
+    }
+
 }
 document.onload = init()
