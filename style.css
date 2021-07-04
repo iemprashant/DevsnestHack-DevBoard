@@ -1,0 +1,112 @@
+:root {
+    font-size: 62.5%;
+    background-color: #f2f2f2;
+}
+
+
+/* utility class */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Lexend', sans-serif;
+    transition: all 0.3s;
+}
+
+h1,
+h2 {
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 5.4rem;
+    margin-bottom: 3rem;
+}
+
+h1>span {
+    font-size: 2.4rem;
+    font-weight: 500;
+}
+
+h2 {
+    font-size: 4.1rem;
+    margin-bottom: 4rem;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+
+/* maincss*/
+
+.navbar {
+    height: 8vh;
+    background-color: white;
+    padding: 1rem 4rem;
+    box-shadow: 0 0 1rem 0 var(--primary-text-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar>span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+#toolbox {
+    height: 85vh;
+    width: 5vw;
+    transition: 0.5s;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    margin: 1rem auto;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    color: #000000;
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+#boardcolor {
+    margin: 1% 1% 1% 1%;
+    padding: 3px 0px 3px 0px;
+    font-size: 12px;
+}
+
+#canvas {
+    border-radius: 1rem;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    margin: 1rem auto;
+}
