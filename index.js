@@ -68,24 +68,19 @@ function canvasEventSetup() {
     canv.addEventListener('pointerout', stop_draw)
 }
 
-// working of Undo
+//enable and diable undo redo
 function buttonStateCheck() {
     if (undoArrayIndex < 1) {
         undobtn.classList.add("disabled")
-        redobtn.classList.add("disabled")
-    } else if (undoArray.length >= 1) {
-        undobtn.classList.remove("disabled")
-        redobtn.classList.add("disabled")
-    } else if (undoArrayIndex == undoArray.length - 1) {
-        redobtn.classList.add("disabled")
-    } else if (undoArrayIndex < undoArray.length - 1) {
-        redobtn.classList.remove("disabled")
-        redobtn.disabled = false;
+    } else {
+        if (undoArray.length >= 1) {
+            undobtn.classList.remove("disabled")
+        }
+        if (undoArrayIndex < undoArray.length - 1) {
+            redobtn.classList.remove("disabled")
+        }
     }
-    //number of undo's that can be done
-    if (undoArray.length > 3) {
-        undoArray.splice(0, undoArray.length - 3)
-    }
+
 }
 
 function auxillaryStopDraw() {
@@ -171,7 +166,6 @@ function clearPage() {
 }
 
 function savecanvas() {
-    alert("hello")
     var image = canv.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
     var link = document.createElement('a');
     link.download = "devnestWhiteboard.png";
