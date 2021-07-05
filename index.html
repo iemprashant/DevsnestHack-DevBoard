@@ -32,9 +32,9 @@
             <button class="pensize-icon-div tooltip"><span class="tooltiptext">Pen Color</span><input class="color-icon" id="strokecolor" value="#000000" type="color"></input></button>
             <button class="color-icon-div tooltip"><span class="tooltiptext">Stroke Size</span><input class="pensize-icon tooltip" id="strokewidth" value="10" type="range" min="10" max="100">
             <button class="icon tooltip" id="eraser" onclick="startEraser()"><span class="tooltiptext">Eraser Tool</span><img  src="./assets/eraser.svg"></button>
-            <button class="icon tooltip" id="circle" onclick=" "><span class="tooltiptext">Circle Tool</span><img  src="./assets/circle.svg"></button>
-            <button class="icon tooltip" id="rectangle" onclick=" "><span class="tooltiptext">Rect Tool</span><img  src="./assets/rectangle.svg"></button>
-            <button class="icon tooltip" id="line" onclick=" "><span class="tooltiptext">Line Tool</span><img  src="./assets/line.svg"></button>
+            <button class="icon tooltip" id="circle" onclick="startCircleDrawing()"><span class="tooltiptext">Circle Tool</span><img  src="./assets/circle.svg"></button>
+            <button class="icon tooltip" id="rectangle" onclick="startRectDrawing()"><span class="tooltiptext">Rect Tool</span><img  src="./assets/rectangle.svg"></button>
+            <button class="icon tooltip" id="line" onclick="startLineDrawing()"><span class="tooltiptext">Line Tool</span><img  src="./assets/line.svg"></button>
             <button class="color-icon-div tooltip"><span class="tooltiptext">Board Color</span><input class="color-icon" id="boardcolor" type="color" value="#ffffff" onchange="boardcolourpicker(this)" onkeyup="boardcolourpicker(this)" /></button>
         </div>
         <div id="pagecontainer">

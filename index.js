@@ -8,6 +8,9 @@ const currentstrokewidth = document.getElementById("strokewidth")
 const currentstrokecolor = document.getElementById('strokecolor')
 const eraser = document.getElementById('eraser')
 const pencil = document.getElementById('pencil')
+const line = document.getElementById('line')
+const circle = document.getElementById('circle')
+const rectang = document.getElementById('rectangle')
 const canvascontext = canv.getContext('2d')
 const defaultcolour = document.getElementById('boardcolor').value
 var undoArray = []
@@ -17,7 +20,12 @@ var loc = { x: 0, y: 0 }
 var controlPoint = { x: 0, y: 0 }
 var strok = false
 var firstcheck = false;
-
+// toggle variable
+var isPencilOn = true,
+    isEraserOn = false,
+    isLineOn = false,
+    isCircleOn = false,
+    isRectOn = false
 
 function init() {
     if (!firstcheck) {
@@ -26,7 +34,6 @@ function init() {
     }
     setCanvasSize()
     setBoardColour(defaultcolour)
-    canvasEventSetup()
     canv.style.cursor = 'url("./assets/pencursor.png"), auto'
     toolbox.style.cursor = 'pointer'
     startPencil()
@@ -58,20 +65,31 @@ function cursorlocator(event) {
 }
 
 function canvasEventSetup() {
-    canv.addEventListener('mousedown', start_draw)
-    canv.addEventListener('mouseup', stop_draw)
-    canv.addEventListener('mouseout', stop_draw)
-    canv.addEventListener('mouseup', updateActionToUndoArray)
-    canv.addEventListener('pointerdown', start_draw)
-    canv.addEventListener('pointermove', draw)
-    canv.addEventListener('pointerup', stop_draw)
-    canv.addEventListener('pointerup', updateActionToUndoArray)
-    canv.addEventListener('pointerout', stop_draw)
+    if (isLineOn) {
+        canv.addEventListener('touchstart', start_line)
+        canv.addEventListener('touchmove', draw_line)
+        canv.addEventListener('touchend', stop_line)
+        canv.addEventListener('mousedown', start_line)
+        canv.addEventListener('mousemove', draw_line)
+        canv.addEventListener('mouseup', stop_line)
+        canv.addEventListener('pointerdown', start_line)
+        canv.addEventListener('pointermove', draw_line)
+        canv.addEventListener('pointerup', stop_line)
+    } else {
+        canv.addEventListener('mousedown', start_draw)
+        canv.addEventListener('mouseup', stop_draw)
+        canv.addEventListener('mouseout', stop_draw)
+        canv.addEventListener('mouseup', updateActionToUndoArray)
+        canv.addEventListener('pointerdown', start_draw)
+        canv.addEventListener('pointermove', draw)
+        canv.addEventListener('pointerup', stop_draw)
+        canv.addEventListener('pointerup', updateActionToUndoArray)
+        canv.addEventListener('pointerout', stop_draw)
+    }
 }
 
 //enable and diable undo redo
 function buttonStateCheck() {
-
     if (undoArrayIndex == 0) {
         undobtn.classList.add("disabled")
         redobtn.classList.add("disabled")
@@ -99,7 +117,6 @@ function updateActionToUndoArray() {
     if (undoArrayIndex < undoArray.length) {
         undoArray.splice(undoArrayIndex + 1, undoArray.length - undoArrayIndex - 1)
     }
-    console.log(currentState)
     undoArray.push(currentState)
     undoArrayIndex = undoArray.length - 1;
     if (firstcheck) {
@@ -128,6 +145,21 @@ function redo() {
     }
 }
 
+// clear btn function
+function clearPage() {
+    canvascontext.clearRect(0, 0, canv.width, canv.height)
+    canvascontext.fillStyle = document.getElementById('boardcolor').value
+    canvascontext.fillRect(0, 0, canv.width, canv.height)
+}
+
+function savecanvas() {
+    var image = canv.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
+    var link = document.createElement('a');
+    link.download = "devnestWhiteboard.png";
+    link.href = image;
+    link.click();
+}
+
 // load stroke details
 function loadStrokedetails(canvascontext_name) {
     canvascontext_name.lineCap = 'round'
@@ -135,7 +167,33 @@ function loadStrokedetails(canvascontext_name) {
     canvascontext_name.strokeStyle = document.getElementById('strokecolor').value
     canvascontext_name.lineJoin = 'round'
 }
-// drawing function
+
+function tool_toggler() {
+    if (isPencilOn) {
+        stopPencil()
+    }
+    if (isEraserOn) {
+        stopEraser()
+    }
+    if (isLineOn) {
+        stopLineDrawing()
+    }
+    if (isCircleOn) {
+        stopCircleDrawing()
+    }
+    if (isRectOn) {
+
+        stopRectDrawing()
+    }
+}
+
+var penstrokewidth = 5;
+var penstrokecolor = currentstrokecolor.value;
+var eraserstrokewidth = 100;
+var eraserstrokecolor = document.getElementById("boardcolor").value;
+
+// pen and eraser drawing function
+
 function start_draw(event) {
     event.preventDefault()
     cursorlocator(event)
@@ -164,28 +222,28 @@ function draw(event) {
     canvascontext.closePath()
 }
 
-// clear btn function
-function clearPage() {
-    canvascontext.clearRect(0, 0, canv.width, canv.height)
-    canvascontext.fillStyle = document.getElementById('boardcolor').value
-    canvascontext.fillRect(0, 0, canv.width, canv.height)
+
+//working of pen eraser 
+
+// pen function
+function startPencil() {
+    canv.style.cursor = 'url("./assets/pencursor.png"), auto'
+    tool_toggler()
+    isPencilOn = true
+    currentstrokewidth.value = penstrokewidth
+    currentstrokecolor.value = penstrokecolor
+    pencil.style.backgroundColor = '#9392FF'
+    canvasEventSetup()
 }
 
-function savecanvas() {
-    var image = canv.toDataURL("image/png", 1.0).replace("image/png", "image/octet-stream");
-    var link = document.createElement('a');
-    link.download = "devnestWhiteboard.png";
-    link.href = image;
-    link.click();
+function stopPencil() {
+    isPencilOn = false
+    pencil.style.backgroundColor = 'whitesmoke'
+    penstrokewidth = currentstrokewidth.value
+    penstrokecolor = currentstrokecolor.value
 }
 
-// SHifting and working of pen eraser 
-var penstrokewidth = 5;
-var penstrokecolor;
-var eraserstrokewidth = 100;
-var eraserstrokecolor = document.getElementById("boardcolor").value;
-var lstrokewidth = currentstrokewidth.value;
-var lstrokecolor = currentstrokecolor.value;
+// eraser function
 
 function startEraser() {
     strokecolourbutton.disabled = true;
@@ -205,35 +263,89 @@ function stopEraser() {
     strokecolourbutton.classList.remove("disabled")
 }
 
-function startPencil() {
-    canv.style.cursor = 'url("./assets/pencursor.png"), auto'
+// line drawing function
+
+function startLineDrawing() {
+    canv.style.cursor = 'crosshair'
     tool_toggler()
-    isPencilOn = true
-    currentstrokewidth.value = penstrokewidth
+    line.style.backgroundColor = '#9392FF'
     currentstrokecolor.value = penstrokecolor
-    pencil.style.backgroundColor = '#9392FF'
+    currentstrokewidth.value = penstrokewidth
+    isLineOn = true
+    canvasEventSetup()
+    alert('Opps, Feature is under development')
+
 }
 
-function stopPencil() {
-    isPencilOn = false
-    pencil.style.backgroundColor = 'whitesmoke'
+function stopLineDrawing() {
+    isLineOn = false
+    line.style.backgroundColor = 'whitesmoke'
     penstrokewidth = currentstrokewidth.value
     penstrokecolor = currentstrokecolor.value
 }
 
-var isPencilOn = true,
-    isEraserOn = false,
-    isLineOn = false,
-    isCircleOn = false,
-    isRectOn = false
-
-function tool_toggler() {
-    if (isPencilOn) {
-        stopPencil()
-    }
-    if (isEraserOn) {
-        stopEraser()
-    }
-
+function start_line(event) {
+    event.preventDefault()
+    cursorlocator(event)
+    controlPoint.x = loc.x
+    controlPoint.y = loc.y
+    loadStrokedetails(canvascontext)
+    strok = true
 }
+
+function draw_line(event) {
+    if (!strok) {
+        return
+    }
+    canvascontext.beginPath()
+    canvascontext.moveTo(controlPoint.x, controlPoint.y)
+    cursorlocator(event)
+    canvascontext.lineTo(loc.x, loc.y)
+    canvascontext.stroke()
+}
+
+function stop_line() {
+    strok = false
+    loadStrokedetails(canvascontext)
+    updateActionToUndoArray()
+}
+
+// Circle Function drawing
+function startCircleDrawing() {
+    canv.style.cursor = 'crosshair'
+    tool_toggler()
+    circle.style.backgroundColor = '#9392FF'
+    currentstrokecolor.value = penstrokecolor
+    currentstrokewidth.value = penstrokewidth
+    isCircleOn = true
+    canvasEventSetup()
+    alert('Opps, Feature is under development')
+}
+
+function stopCircleDrawing() {
+    isCircleOn = false
+    circle.style.backgroundColor = 'whitesmoke'
+    penstrokewidth = currentstrokewidth.value
+    penstrokecolor = currentstrokecolor.value
+}
+
+// Rectangle Function drawing
+function startRectDrawing() {
+    canv.style.cursor = 'crosshair'
+    tool_toggler()
+    rectangle.style.backgroundColor = '#9392FF'
+    currentstrokecolor.value = penstrokecolor
+    currentstrokewidth.value = penstrokewidth
+    isRectOn = true
+    canvasEventSetup()
+    alert('Opps, Feature is under development')
+}
+
+function stopRectDrawing() {
+    isRectOn = false
+    rectangle.style.backgroundColor = 'whitesmoke'
+    penstrokewidth = currentstrokewidth.value
+    penstrokecolor = currentstrokecolor.value
+}
+
 document.onload = init()
