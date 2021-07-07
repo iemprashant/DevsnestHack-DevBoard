@@ -1,5 +1,5 @@
 ### This repository ✉ contains the  *Devsnest 40-hours Hackathon Project* 🚀DevsBoard;
-
+## [**DevsBoard** ](https://devsboard.netlify.app)💭
 > Currently, The project has tools like
 1. Pen Tool
 2. Eraser Tool
@@ -11,10 +11,9 @@
 8. Clear Page Button
 9. Save Tool
 
-> Hackathon was a great learning Experience , where I worked first time on canvas .
+> Hackathon was a great apprenticeship experience, where I worked for the first time on canvas .
 
 ` You may want to Star or Create a Issue ✍ for projects to improve the project⚡ .`
 
-#[**DevsBoard** ](https://devsboard.netlify.app)💭
-   ***
    <img src="./Demo.png" alt="Markdown Monster icon">
+   <img src="./Demo2.png" alt="Markdown Monster icon">
