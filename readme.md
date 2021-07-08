@@ -10,6 +10,7 @@
 7. Redo Button
 8. Clear Page Button
 9. Save Tool
+10. Tool tip on hover
 
 > Hackathon was a great apprenticeship experience, where I worked for the first time on canvas .
 
